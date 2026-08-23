@@ -21,7 +21,7 @@ public class PrestamoServiceImplementacion implements PrestamoService{
     }
 
     @Override
-    public Prestamo prestarLibro(Long usaurio_id, Long libro_id) {
+    public PrestamoResponse prestarLibro(Long usaurio_id, Long libro_id) {
         
         Usuario usuarioEncontrado = usuarioRepository.findById(usaurio_id).orElseThrow(()-> new RuntimeException("Error usuario no encontrado"));
         Libro libroEncontrado = libroRepository.findById(libro_id).orElseThrow(()-> new RuntimeException("Error libro no encontrado"));
@@ -31,7 +31,18 @@ public class PrestamoServiceImplementacion implements PrestamoService{
         nuevoPrestamo.setUsuario(usuarioEncontrado);
         nuevoPrestamo.setLibro(libroEncontrado);
 
-        return prestamoRepository.save(nuevoPrestamo);
+        Prestamo guardado = prestamoRepository.save(nuevoPrestamo);
+
+        PrestamoResponse respuesta = new PrestamoResponse();
+
+        respuesta.setId(guardado.getId());
+        respuesta.setFechaPrestamo(guardado.getFechaPrestamo());
+        respuesta.setFechaDevolucion(guardado.getFechaDevolucion());
+        respuesta.setNombreUsuario(usuarioEncontrado.getNombre());
+        respuesta.setTituloLibro(libroEncontrado.getNombre());
+        respuesta.setIsbnLibro(libroEncontrado.getIsbn());
+
+        return respuesta;
         
     }
 

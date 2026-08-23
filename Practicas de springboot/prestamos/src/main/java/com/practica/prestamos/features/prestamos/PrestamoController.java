@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/prestamos")
 public class PrestamoController {
@@ -19,9 +21,9 @@ public class PrestamoController {
 
 
     @PostMapping
-    public ResponseEntity<Prestamo> prestar(@RequestBody PrestamoRequest request){
+    public ResponseEntity<PrestamoResponse> prestar(@Valid @RequestBody PrestamoRequest request){
 
-        Prestamo p1 = prestamoService.prestarLibro(request.getUsuarioId(), request.getLibroId());
+        PrestamoResponse p1 = prestamoService.prestarLibro(request.getUsuarioId(), request.getLibroId());
         return ResponseEntity.status(HttpStatus.CREATED).body(p1);
     }
 }
