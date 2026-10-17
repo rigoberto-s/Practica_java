@@ -3,10 +3,11 @@ package com.practica.musicvault.features.songs;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository 
-public interface SongRepository {
+public interface SongRepository extends JpaRepository<Song, Integer>{
 
     //? Estos comentarios son especiales ya que son temas en los que debo de practicar, en este caso aprender a usar los nombres
     //? comninar las palabras ver como usarlos, practicar etc
@@ -20,7 +21,7 @@ public interface SongRepository {
     public List<Song> findAllByGenreId(Integer genreId);
 
     //buscar canciones de un usuario por la fecha añadida
-    public List<Song> findAllByAddedDateAndUserId(LocalDate addedDate, Integer userId);
+    public List<Song> findAllByAddDateAndUserId(LocalDate addedDate, Integer userId);
 
     //buscar canciones favoritas de un usuario
     // Si aqui queremos todas las canciones fevpritas de un suario por que no pusismos el All?
